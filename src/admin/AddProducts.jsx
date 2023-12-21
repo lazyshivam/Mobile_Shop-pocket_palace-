@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
+import axios from "axios";
 
 const AddProducts = () => {
   const [productData, setProductData] = useState({
@@ -23,23 +24,66 @@ const AddProducts = () => {
     });
   };
 
-  const handleFileChange = (e) => {
+  // const handleFileChange = (e) => {
+  //   const { files } = e.target;
+  //   const newImages = Array.from(files).map((file) => ({
+  //     data: file.buffer,
+  //     contentType: file.mimetype,
+  //   }));
+  //   setProductData((prevData) => ({
+  //     ...prevData,
+  //     images: [...prevData.images, ...newImages],
+  //   }));
+  //   console.log(productData)
+  // };
+  const [imageURI,setImageURI]=useState('')
+  const handleFileChange = async (e) => {
     const { files } = e.target;
-    const newImages = Array.from(files).map((file) => ({
-      data: file,
-      contentType: file.type,
-    }));
+
+    const newImages = await Promise.all(
+      Array.from(files).map((file) => {
+        return new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            const base64data = reader.result.split(",")[1];
+            // setImageURI()
+            // console.log(base64data)
+            resolve({
+              data: base64data,
+              contentType: file.type,
+            });
+          };
+          reader.readAsDataURL(file);
+        });
+      })
+    );
+
     setProductData((prevData) => ({
       ...prevData,
       images: [...prevData.images, ...newImages],
     }));
   };
 
-  const handleSubmit = (e) => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Implement your logic to save productData to the database or API
-    console.log("Product Data:", productData);
-    // Reset form or navigate to another page as needed
+    setLoading(true);
+    console.log(productData);
+    //  save productData to the database
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/data/addProduct",
+        productData
+      );
+      console.log("Product Data:", response.data);
+    } catch (e) {
+      console.error(e.message);
+      setError("Error adding product. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -228,15 +272,16 @@ const AddProducts = () => {
                 </label>
               </div>
               {productData.images.length > 0 && (
-                <div className="flex flex-wrap gap-2">
-                  {productData.images.map((image, index) => (
-                    <img
-                      key={index}
-                      src={URL.createObjectURL(image.data)}
-                      alt={`Product Image ${index + 1}`}
-                      className="w-16 h-16 object-cover rounded-md"
-                    />
-                  ))}
+                <div className="flex  flex-wrap gap-2">
+                  {productData?.images?.map((image, index) => {
+                   return <img
+                    key={index}
+                    src={`data:${image.contentType};base64,${image.data}`}
+                    // data-base64={image.data}
+                    alt={`Product Image ${index + 1}`}
+                    className="w-16   h-16 object-cover rounded-md"
+                  />
+                     })}
                 </div>
               )}
             </div>
@@ -248,8 +293,9 @@ const AddProducts = () => {
             type="submit"
             className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring focus:border-blue-300"
           >
-            Save
+            {loading ? "Saving..." : "Save"}
           </button>
+          {error && <p className="text-red-500 text-sm ml-2">{error}</p>}
         </div>
       </div>
     </form>
