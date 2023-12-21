@@ -59,27 +59,44 @@ router.post("/userProducts", ensureAuthenticated, async (req, res) => {
 });
 
 
-// Delete an API link for the authenticated user
-router.delete("/apiLinks/:id", ensureAuthenticated, async (req, res) => {
+// Add a new product to the database
+router.post("/addProduct",async (req, res) => {
   try {
-    const { id } = req.params;
-    const deletedApiLink = await ApiLink.findOneAndDelete({
-      _id: id,
-      user: req.user.id,
+    const {
+      brand,
+      model,
+      specifications,
+      price,
+      releaseDate,
+      images,
+      type,
+      processor,
+      memory,
+      OS,
+    } = req.body;
+
+    const newProduct = new Product({
+      brand,
+      model,
+      specifications,
+      price,
+      releaseDate,
+      images,
+      type,
+      processor,
+      memory,
+      OS,
+      
     });
-    console.log("deleting the save api links",deletedApiLink);
-    if (deletedApiLink) {
-      res.status(200).json(deletedApiLink);
-    } else {
-      res.status(404).json({ error: "API link not found" });
-    }
+
+    const savedProduct = await newProduct.save();
+
+    res.status(201).json(savedProduct);
   } catch (error) {
-    console.error("Error deleting API link:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error("Error adding new product:", error);
+    res.status(500).json({ error: "Error adding new product" });
   }
 });
-
-
 
 
 // Endpoint to get all products
