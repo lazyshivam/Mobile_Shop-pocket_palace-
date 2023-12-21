@@ -1,0 +1,26 @@
+
+[
+    {
+      "brand": "Apple",
+      "model": "iPhone 13",
+      "specifications": "6.1-inch Super Retina XDR display, A15 Bionic chip, Dual-camera system",
+      "price": 999.99,
+      "releaseDate": "2022-09-14",
+      "images": [
+        "path/to/image1.jpg",
+        "path/to/image2.jpg"
+      ]
+    },
+    {
+      "brand": "Samsung",
+      "model": "Galaxy S21",
+      "specifications": "6.2-inch Dynamic AMOLED 2X display, Exynos 2100/Snapdragon 888 chip",
+      "price": 799.99,
+      "releaseDate": "2021-01-29",
+      "images": [
+        "path/to/image3.jpg",
+        "path/to/image4.jpg"
+      ]
+    }
+]
+  
