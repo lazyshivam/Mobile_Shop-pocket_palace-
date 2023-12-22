@@ -1,61 +1,38 @@
 import React, { useState, useEffect } from "react";
-
-const MobilePage = ({ mobileInfo }) => {
-  const { image, title, discount, price } = mobileInfo;
-
-  return (
-    <div className="flex-shrink-0 w-screen p-8">
-      <div className="flex items-center justify-between">
-        <div className="w-1/2">
-          <h1 className="text-4xl font-bold mb-4">{title}</h1>
-          <p className="text-xl mb-2">{discount}</p>
-          <p className="mb-6 text-gray-500">{price}</p>
-          <button className="bg-blue-500 text-white px-6 py-2 rounded mr-4">
-            Buy Now
-          </button>
-          <button className="border border-blue-500 text-blue-500 px-6 py-2 rounded">
-            Learn More
-          </button>
-        </div>
-        <div className="w-1/2 text-right">
-          <img src={image} alt={title} className="h-64" />
-        </div>
-      </div>
-    </div>
-  );
-};
+import { GrNext, GrPrevious } from "react-icons/gr";
+import image1 from "../assets/Main-banner-1-1903x580.jpg";
+import image2 from "../assets/Main-banner-2-1903x580.jpg";
+import LandingPage from "./utitlityComponents/LandingPage";
+import ProductPage from "./utitlityComponents/ProductPage";
+import ServicesGrid from "./ServicesGrid";
 
 const Home = () => {
   const mobiles = [
     {
-      title: "Mobile 1",
-      image: "/path-to-mobile-1-image",
+      title: "Galaxy S13+ Ultra.",
+      image: image1,
       discount: "50% off orders above $999.00",
       price: "From $999.00 or $41.62/mo per month",
     },
     {
-        title: "Mobile 2",
-        image: "/path-to-mobile-1-image",
-        discount: "50% off orders above $999.00",
-        price: "From $999.00 or $41.62/mo per month",
-      },
-      {
-        title: "Mobile 3",
-        image: "/path-to-mobile-1-image",
-        discount: "50% off orders above $999.00",
-        price: "From $999.00 or $41.62/mo per month",
-      },
-    // Add more mobile entries as needed
+      title: "Electronic Essentials",
+      image: image2,
+      discount: "50% off order above $999.00",
+      price: "From $999.00 or $41.62/mo per month",
+    },
   ];
 
   const [currentPage, setCurrentPage] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
 
   const nextPage = () => {
     setCurrentPage((prevPage) => (prevPage + 1) % mobiles.length);
   };
 
   const prevPage = () => {
-    setCurrentPage((prevPage) => (prevPage - 1 + mobiles.length) % mobiles.length);
+    setCurrentPage(
+      (prevPage) => (prevPage - 1 + mobiles.length) % mobiles.length
+    );
   };
 
   useEffect(() => {
@@ -64,15 +41,87 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="flex overflow-x-auto">
-      <MobilePage mobileInfo={mobiles[currentPage]} />
-      <button onClick={prevPage} className="absolute left-0 top-1/2 transform -translate-y-1/2 px-4 py-2 bg-blue-500 text-white rounded">
-        Previous
-      </button>
-      <button onClick={nextPage} className="absolute right-0 top-1/2 transform -translate-y-1/2 px-4 py-2 bg-blue-500 text-white rounded">
-        Next
-      </button>
-    </div>
+    <>
+      <div
+        className="relative flex flex-col md:flex-row md:h-[500px] overflow-hidden"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <LandingPage PageInfo={mobiles[currentPage]} />
+        {isHovered && (
+          <>
+            <button
+              onClick={prevPage}
+              className="absolute left-0 top-1/2 transform -translate-y-1/2 p-2 md:p-4 bg-gray-300 hover:bg-gray-400 text-white rounded-full"
+            >
+              <GrPrevious />
+            </button>
+            <button
+              onClick={nextPage}
+              className="absolute right-0 top-1/2 transform -translate-y-1/2 p-2 md:p-4 bg-gray-300 hover:bg-gray-400 text-white rounded-full"
+            >
+              <GrNext />
+            </button>
+          </>
+        )}
+        <div className="absolute bottom-2 left-0 right-0 flex justify-center space-x-2">
+          {mobiles.map((_, index) => (
+            <div
+              key={index}
+              className={`h-2 w-2 md:h-3 md:w-3 bg-gray-400 rounded-full ${
+                index === currentPage ? "bg-blue-400" : ""
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div className="container mx-auto p-6 md:p-12 ">
+        <div className=" bg-gray-200  p-8 rounded-md">
+          <div className="flex justify-between items-start">
+            <h1 className="text-2xl font-bold">Our Products</h1>
+            {/* Link to navigate to the all products page */}
+            <a to="/all-products" className="text-blue-500 hover:cursor-pointer hover:underline">
+              View All Products
+            </a>
+          </div>
+          <hr className="bg-gray-400 p-[0.5px] mb-12 mt-2" />
+          <ProductPage />
+        </div>
+      </div>
+
+      <div className="container mx-auto p-6 md:p-12 ">
+        <div className=" bg-gray-200  p-8 rounded-md">
+          <div className="flex justify-between items-start">
+            <h1 className="text-2xl font-bold">Our Best Selling Products</h1>
+            {/* Link to navigate to the all products page */}
+            <a to="/all-products" className="text-blue-500 hover:cursor-pointer hover:underline">
+              View All Products
+            </a>
+          </div>
+          <hr className="bg-gray-400 p-[0.5px] mb-12 mt-2" />
+          <ProductPage />
+        </div>
+      </div>
+
+      <div className="container mx-auto p-6 md:p-12 ">
+        <div className=" bg-gray-200  p-8 rounded-md">
+          <div className="flex justify-between items-start">
+            <h1 className="text-2xl font-bold">Our New Products</h1>
+            {/* Link to navigate to the all products page */}
+            <a to="/all-products" className="text-blue-500 hover:cursor-pointer hover:underline">
+              View All Products
+            </a>
+          </div>
+          <hr className="bg-gray-400 p-[0.5px] mb-12 mt-2" />
+          <ProductPage />
+        </div>
+      </div>
+      <div className="py-8">
+        <ServicesGrid/>
+      </div>
+      
+    </>
   );
 };
 

@@ -189,7 +189,7 @@ const Navbar = () => {
 
       {/* Cart section for small screens */}
       {isCartOpen && (
-        <div className="fixed top-20  md:h-[600px] shadow-md right-12 bottom-0 p-4 rounded-lg bg-gray-200  bg-opacity-90 text-black flex  justify-center">
+        <div className="fixed top-20  md:h-[600px] shadow-md right-12 bottom-0 p-4 rounded-lg z-10 bg-gray-100   text-black flex  justify-center">
           <CartComponent />
           <button
             onClick={() => {

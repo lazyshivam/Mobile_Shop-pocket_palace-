@@ -30,7 +30,7 @@ const CartComponent = () => {
   const total = subtotal + shippingCost;
 
   return (
-    <div className="pt-10">
+    <div className="pt-10 ">
       <h1 className="mb-10 text-center text-2xl font-bold">Cart Items</h1>
       <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
         <div className="rounded-lg overflow-y-scroll h-96   p-3 bg-gray-300 md:w-2/3">
