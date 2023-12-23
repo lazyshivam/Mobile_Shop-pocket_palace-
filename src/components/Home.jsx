@@ -68,8 +68,8 @@ const Home = () => {
           {mobiles.map((_, index) => (
             <div
               key={index}
-              className={`h-2 w-2 md:h-3 md:w-3 bg-gray-400 rounded-full ${
-                index === currentPage ? "bg-blue-400" : ""
+              className={`h-2 w-2 md:h-3 md:w-3  rounded-full ${
+                index === currentPage ? "bg-blue-400" : "bg-gray-400"
               }`}
             />
           ))}

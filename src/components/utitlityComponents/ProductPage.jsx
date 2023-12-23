@@ -2,74 +2,11 @@ import React, { useState } from "react";
 import ProductCard from "./ProductCard";
 import { GrNext, GrPrevious } from "react-icons/gr";
 
+import products  from "../../DummyData"
+
 
 const ProductPage = () => {
-  const products = [
-    {
-      id: 1,
-      name: "Apple iPhone 13 (128GB) - Starlight Light Blue",
-      category: "Smart Phone",
-      availability: 49,
-      price: 122.0,
-      image:
-        "https://opc.webdigify.com/OPC03/OPC090_quickstore/image/cache/catalog/07-1000x1000.jpg",
-    },
-    {
-      id: 11,
-      name: "Apple iPhone 13 (128GB) - Starlight Light Blue",
-      category: "Smart Phone",
-      availability: 49,
-      price: 122.0,
-      image:
-        "https://opc.webdigify.com/OPC03/OPC090_quickstore/image/cache/catalog/07-1000x1000.jpg",
-    },
-    {
-      id: 111,
-      name: "Apple iPhone 13 (128GB) - Starlight Light Blue",
-      category: "Smart Phone",
-      availability: 49,
-      price: 122.0,
-      image:
-        "https://opc.webdigify.com/OPC03/OPC090_quickstore/image/cache/catalog/07-1000x1000.jpg",
-    },
-    {
-      id: 1111,
-      name: "Apple iPhone 13 (128GB) - Starlight Light Blue",
-      category: "Smart Phone",
-      availability: 49,
-      price: 122.0,
-      image:
-        "https://opc.webdigify.com/OPC03/OPC090_quickstore/image/cache/catalog/07-1000x1000.jpg",
-    },
-    {
-      id: 12,
-      name: "Apple iPhone 13 (128GB) - Starlight Light Blue",
-      category: "Smart Phone",
-      availability: 49,
-      price: 122.0,
-      image:
-        "https://opc.webdigify.com/OPC03/OPC090_quickstore/image/cache/catalog/07-1000x1000.jpg",
-    },
-    {
-      id: 122,
-      name: "Apple iPhone 13 (128GB) - Starlight Light Blue",
-      category: "Smart Phone",
-      availability: 49,
-      price: 122.0,
-      image:
-        "https://opc.webdigify.com/OPC03/OPC090_quickstore/image/cache/catalog/07-1000x1000.jpg",
-    },
-    {
-      id: 13,
-      name: "Apple iPhone 13 (128GB) - Starlight Light Blue",
-      category: "Smart Phone",
-      availability: 49,
-      price: 122.0,
-      image:
-        "https://opc.webdigify.com/OPC03/OPC090_quickstore/image/cache/catalog/07-1000x1000.jpg",
-    },
-    // Add more products as needed
-  ];
+  
 
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isHovered, setIsHovered] = useState(false);

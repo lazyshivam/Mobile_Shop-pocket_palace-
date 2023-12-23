@@ -55,10 +55,16 @@ const Navbar = () => {
             <Link to="/" className="hover:text-yellow-500">
               Home
             </Link>
-            <Link to="/" className="hover:text-yellow-500">
+            <Link to="/products" className="hover:text-yellow-500">
               Products
             </Link>{" "}
-            <Link to="/" className="hover:text-yellow-500">
+            <Link to="/bestSelling" className="hover:text-yellow-500">
+              BestSelling
+            </Link>
+            <Link to="/newProducts" className="hover:text-yellow-500">
+              NewProducts
+            </Link>
+            <Link to="/about" className="hover:text-yellow-500">
               About
             </Link>
             {/* ... other links */}
@@ -95,7 +101,7 @@ const Navbar = () => {
       </div>
       {/* menu items for small devices */}
       {isOpen && (
-        <div className=" fixed md:hidden w-44  top-0  left-0 bottom-0 rounded-sm  bg-slate-100 shadow-lg flex items-center justify-start flex-col text-black ">
+        <div className="z-10 fixed md:hidden w-44  top-0  left-0 bottom-0 rounded-sm  bg-slate-100 shadow-lg flex items-center justify-start flex-col text-black ">
           {/* Menu button for small screens */}
           <button
             onClick={() => {
@@ -116,6 +122,12 @@ const Navbar = () => {
             <Link to="/products" className="hover:text-yellow-500">
               Products
             </Link>{" "}
+            <Link to="/bestSelling" className="hover:text-yellow-500">
+              BestSelling
+            </Link>
+            <Link to="/newProducts" className="hover:text-yellow-500">
+              NewProducts
+            </Link>
             <Link to="/about" className="hover:text-yellow-500">
               About
             </Link>
@@ -125,7 +137,7 @@ const Navbar = () => {
       )}
       {/* search bar for small devices */}
       {isSearchOpen && (
-        <div className="fixed md:hidden w-96 h-20 top-20 z-50  right-12 bottom-0 rounded-sm bg-slate-200 bg-opacity-75 flex items-center justify-center">
+        <div className="fixed md:hidden w-96 h-20 top-20 z-10  right-12 bottom-0 rounded-sm bg-slate-200 bg-opacity-85 flex items-center justify-center">
           <div className="flex   space-x-2 relative">
             <input
               type="text"
