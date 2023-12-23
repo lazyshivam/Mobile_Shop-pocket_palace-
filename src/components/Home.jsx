@@ -117,7 +117,7 @@ const Home = () => {
           <ProductPage />
         </div>
       </div>
-      <div className="py-8">
+      <div className="p-2 my-12  bg-gray-200">
         <ServicesGrid/>
       </div>
       
