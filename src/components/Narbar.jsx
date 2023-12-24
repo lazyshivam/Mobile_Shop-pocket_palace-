@@ -55,6 +55,9 @@ const Navbar = () => {
             <Link to="/" className="hover:text-yellow-500">
               Home
             </Link>
+            <Link to="/user_admin" className="hidden hover:text-yellow-500">
+              Admin_Panel
+            </Link>
             <Link to="/products" className="hover:text-yellow-500">
               Products
             </Link>{" "}
@@ -118,6 +121,9 @@ const Navbar = () => {
             {/* Navigation links for large screens */}
             <Link to="/" className="hover:text-yellow-500">
               Home
+            </Link>
+            <Link to="/user_admin" className="hidden hover:text-yellow-500">
+              Admin_Panel
             </Link>
             <Link to="/products" className="hover:text-yellow-500">
               Products
