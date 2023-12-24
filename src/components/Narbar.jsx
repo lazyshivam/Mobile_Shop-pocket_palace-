@@ -52,11 +52,11 @@ const Navbar = () => {
           </div>
           <div className="hidden md:flex space-x-4 ml-8">
             {/* Navigation links for large screens */}
+            <Link to="/user_admin" className=" hover:text-yellow-500">
+              Admin_Panel
+            </Link>
             <Link to="/" className="hover:text-yellow-500">
               Home
-            </Link>
-            <Link to="/user_admin" className="hidden hover:text-yellow-500">
-              Admin_Panel
             </Link>
             <Link to="/products" className="hover:text-yellow-500">
               Products
@@ -119,11 +119,11 @@ const Navbar = () => {
           </div>
           <div className="flex mt-10 flex-col space-y-4 ">
             {/* Navigation links for large screens */}
+            <Link to="/user_admin" className="hover:text-yellow-500">
+              Admin_Panel
+            </Link>
             <Link to="/" className="hover:text-yellow-500">
               Home
-            </Link>
-            <Link to="/user_admin" className="hidden hover:text-yellow-500">
-              Admin_Panel
             </Link>
             <Link to="/products" className="hover:text-yellow-500">
               Products
