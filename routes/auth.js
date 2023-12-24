@@ -2,6 +2,7 @@ const express = require("express");
 const passport = require("passport");
 const router = express.Router();
 const ensureAuthenticated=require("../middleware/ensureAuthenticated");
+const {isAdmin} = require("../middleware/IsAdmin")
 
 router.get(
   "/google",
@@ -33,6 +34,20 @@ router.get("/profile", ensureAuthenticated, (req, res) => {
     res.status(403).json({ error: true, message: "Not Authorized" });
   }
 });
+
+// Route for admin profile (protected with ensureAdmin middleware)
+router.get("/admin/profile", isAdmin, (req, res) => {
+    try {
+      res.status(200).json({
+        error: false,
+        message: "Successfully Logged In as Admin",
+        user: req.user,
+      });
+    } catch (err) {
+      console.error("Error fetching admin profile:", err);
+      res.status(403).json({ error: true, message: "Not Authorized as Admin" });
+    }
+  });
 
 router.get("/logout", ensureAuthenticated, (req, res) => {
   req.logout((err) => {

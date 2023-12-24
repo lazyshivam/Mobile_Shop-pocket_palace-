@@ -41,7 +41,8 @@ app.use(passport.session());
 // console.log(process.env.SECRET_KEY)
 
 app.use("/auth", require("./routes/auth"));
-app.use("/api/data", require("./routes/products"))
+app.use('/admin/user', require("./routes/manageProducts"));
+app.use("/api/data", require("./routes/products"));
 
 
 app.all('*', (req, res) => {

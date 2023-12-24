@@ -59,44 +59,6 @@ router.post("/userProducts", ensureAuthenticated, async (req, res) => {
 });
 
 
-// Add a new product to the database
-router.post("/addProduct",async (req, res) => {
-  try {
-    const {
-      brand,
-      model,
-      specifications,
-      price,
-      releaseDate,
-      images,
-      type,
-      processor,
-      memory,
-      OS,
-    } = req.body;
-
-    const newProduct = new Product({
-      brand,
-      model,
-      specifications,
-      price,
-      releaseDate,
-      images,
-      type,
-      processor,
-      memory,
-      OS,
-      
-    });
-
-    const savedProduct = await newProduct.save();
-
-    res.status(201).json(savedProduct);
-  } catch (error) {
-    console.error("Error adding new product:", error);
-    res.status(500).json({ error: "Error adding new product" });
-  }
-});
 
 
 // Endpoint to get all products
