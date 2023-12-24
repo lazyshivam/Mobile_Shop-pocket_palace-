@@ -22,7 +22,7 @@ const services = [
     description: 'Refer a friend & get surprise gifts',
   },
   {
-    icon: <LuBadgePercent  className="w-12 h-12 text-blue-600 mb-2"t/>, 
+    icon: <LuBadgePercent  className="w-12 h-12 text-blue-600 mb-2"/>, 
     title: 'Secure Payment',
     description: 'Safe & more secure way to pay online',
   },
