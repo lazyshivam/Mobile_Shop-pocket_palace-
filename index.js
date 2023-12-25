@@ -21,7 +21,7 @@ app.use(
   cors({
 		origin: process.env.Home_URL,
 		methods: "GET,POST,PUT,DELETE",
-		// credentials: false,
+		credentials: true,
 	})
 );
 

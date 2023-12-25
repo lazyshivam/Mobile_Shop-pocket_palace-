@@ -36,18 +36,18 @@ router.get("/profile", ensureAuthenticated, (req, res) => {
 });
 
 // Route for admin profile (protected with ensureAdmin middleware)
-router.get("/admin/profile", isAdmin, (req, res) => {
-    try {
-      res.status(200).json({
-        error: false,
-        message: "Successfully Logged In as Admin",
-        user: req.user,
-      });
-    } catch (err) {
-      console.error("Error fetching admin profile:", err);
-      res.status(403).json({ error: true, message: "Not Authorized as Admin" });
-    }
-  });
+// router.get("/admin/profile", isAdmin, (req, res) => {
+//     try {
+//       res.status(200).json({
+//         error: false,
+//         message: "Successfully Logged In as Admin",
+//         user: req.user,
+//       });
+//     } catch (err) {
+//       console.error("Error fetching admin profile:", err);
+//       res.status(403).json({ error: true, message: "Not Authorized as Admin" });
+//     }
+//   });
 
 router.get("/logout", ensureAuthenticated, (req, res) => {
   req.logout((err) => {
