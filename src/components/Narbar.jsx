@@ -6,7 +6,10 @@ import { CgProfile } from "react-icons/cg";
 import CartComponent from "./CartComponent";
 import { CiMenuBurger } from "react-icons/ci";
 import { IoCloseOutline } from "react-icons/io5";
-import logo from "../assets/mobile-shop-high-resolution-logo-white-transparent.png"
+import logo from "../assets/mobile-shop-high-resolution-logo-white-transparent.png";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUserType , selectUser, selectLoggedInState} from "../services/userSlice";
+
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,26 +17,15 @@ const Navbar = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const handleProfileClick = () => {
-    setIsProfileOpen(!isProfileOpen);
-    setIsCartOpen(false);
-  };
+  const baseUrl='http://localhost:8080';
 
-  const handleCartClick = () => {
-    setIsCartOpen(!isCartOpen);
-    setIsProfileOpen(false);
-  };
-
-  const ToggleSign = () => {
-    if (isLoggedIn) {
-      setIsLoggedIn(!isLoggedIn);
-    } else {
-      setIsLoggedIn(!isLoggedIn);
-    }
-  };
-
+  // const [data:User,error,isLoading]=
+  const userType=useSelector(selectUserType);
+ const userProfile=useSelector(selectUser);
+ const isLoggedIn=useSelector(selectLoggedInState)
+  
   return (
     <nav className="bg-[#1C1B1B] text-white p-4">
       <div className="flex justify-between">
@@ -52,9 +44,9 @@ const Navbar = () => {
           </div>
           <div className="hidden md:flex space-x-4 ml-8">
             {/* Navigation links for large screens */}
-            <Link to="/user_admin" className=" hover:text-yellow-500">
-              Admin_Panel
-            </Link>
+            {userType==='admin'&&<Link to="/user_admin" className=" hover:text-yellow-500">
+              Admin Panel
+            </Link>}
             <Link to="/" className="hover:text-yellow-500">
               Home
             </Link>
@@ -89,8 +81,9 @@ const Navbar = () => {
           <button onClick={() => setIsSearchOpen(!isSearchOpen)}>
             <PiMagnifyingGlassLight className="md:hidden  w-8  h-8" />
           </button>
+    
           <button onClick={() => setIsProfileOpen(!isProfileOpen)}>
-            <CgProfile className="  w-8  h-8" />
+            {isLoggedIn ?<img className="w-8 h-8 rounded-full" src={userProfile.picture}/>:<CgProfile className="  w-8  h-8" />}
           </button>
           <button>
             <CiShoppingCart
@@ -119,9 +112,9 @@ const Navbar = () => {
           </div>
           <div className="flex mt-10 flex-col space-y-4 ">
             {/* Navigation links for large screens */}
-            <Link to="/user_admin" className="hover:text-yellow-500">
-              Admin_Panel
-            </Link>
+           {userType==='admin'&& <Link to="/user_admin" className="hover:text-yellow-500">
+              Admin Panel
+            </Link>}
             <Link to="/" className="hover:text-yellow-500">
               Home
             </Link>
@@ -167,26 +160,30 @@ const Navbar = () => {
 
       {/* Profile section  */}
       {isProfileOpen && (
-        <div className="fixed  h-80 top-20 z-10  right-12 bottom-0 rounded-sm bg-white shadow-lg  flex items-center justify-center">
+        <div className="fixed max-w-80 h-80 top-20 z-10  right-12 bottom-0 rounded-lg bg-white shadow-lg  flex items-center justify-center">
           <div className="flex text-center   flex-col p-2 text-gray-700  relative">
             <img
-              src="https://picsum.photos/200"
+              src={isLoggedIn?userProfile?.picture:'https://picsum.photos/200'}
               className="w-16 mb-6 mx-auto rounded-full"
               alt="profile_image"
             />
-            <h1 className="font-semibold text-xl">Hello Shivam !</h1>
-            <div>shivamgoswami.ss.pp@gmail.com</div>
+            <h1 className="font-semibold text-xl">Hello {" "}{isLoggedIn?userProfile?.username:"Guest User"}!</h1>
+            <div className="text-wrap">{isLoggedIn?userProfile?.email:"Please !, sign in to add and see you cart items."}</div>
             <div className="mt-4">
               {isLoggedIn ? (
                 <button
-                  onClick={{}}
+                  onClick={()=>{
+                    window.location.href = `${baseUrl}/auth/logout`;
+                  }}
                   className="p-2  px-3 text-white rounded-full hover:bg-blue-600 shadow-md  bg-blue-500 "
                 >
                   Sign out
                 </button>
               ) : (
                 <button
-                  onClick={{}}
+                onClick={()=>{
+                  window.location.href = `${baseUrl}/auth/google`;
+                }}
                   className="p-2  px-3 text-white rounded-full hover:bg-blue-600 shadow-md  bg-blue-500 "
                 >
                   Sign in
