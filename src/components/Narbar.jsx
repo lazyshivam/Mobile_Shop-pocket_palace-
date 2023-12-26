@@ -160,7 +160,7 @@ const Navbar = () => {
 
       {/* Profile section  */}
       {isProfileOpen && (
-        <div className="fixed max-w-80 h-80 top-20 z-10  right-12 bottom-0 rounded-lg bg-white shadow-lg  flex items-center justify-center">
+        <div className="absolute max-w-80 h-80 top-20 z-10  right-12 bottom-0 rounded-lg bg-white shadow-lg  flex items-center justify-center">
           <div className="flex text-center   flex-col p-2 text-gray-700  relative">
             <img
               src={isLoggedIn?userProfile?.picture:'https://picsum.photos/200'}
@@ -204,7 +204,7 @@ const Navbar = () => {
 
       {/* Cart section for small screens */}
       {isCartOpen && (
-        <div className="fixed top-20  md:h-[600px] shadow-md right-12 bottom-0 p-4 rounded-lg z-10 bg-gray-100   text-black flex  justify-center">
+        <div className="absolute top-20  md:h-[600px] shadow-md right-12 bottom-0 p-4 rounded-lg z-10 bg-gray-100   text-black flex  justify-center">
           <CartComponent />
           <button
             onClick={() => {
