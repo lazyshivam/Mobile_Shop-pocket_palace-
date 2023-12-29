@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 import axios from "axios";
+import { useAddProductsMutation } from "../services/api";
 
 const AddProducts = () => {
   const [productData, setProductData] = useState({
@@ -24,19 +25,7 @@ const AddProducts = () => {
     });
   };
 
-  // const handleFileChange = (e) => {
-  //   const { files } = e.target;
-  //   const newImages = Array.from(files).map((file) => ({
-  //     data: file.buffer,
-  //     contentType: file.mimetype,
-  //   }));
-  //   setProductData((prevData) => ({
-  //     ...prevData,
-  //     images: [...prevData.images, ...newImages],
-  //   }));
-  //   console.log(productData)
-  // };
-  const [imageURI,setImageURI]=useState('')
+  
   const handleFileChange = async (e) => {
     const { files } = e.target;
 
@@ -67,24 +56,32 @@ const AddProducts = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const handleSubmit = async (e) => {
+  // const {}
+  const [AddProducts,result]=useAddProductsMutation()
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+  //   // console.log(productData);
+   
+  //   // //  save productData to the database
+  //   try {
+  //     const response=await AddProducts(productData);
+     
+  //     console.log("Product Data:", response.data);
+  //   } catch (e) {
+  //     console.error(e.message);
+  //     setError("Error adding product. Please try again.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  const handleSubmit=(e)=>{
     e.preventDefault();
-    setLoading(true);
-    console.log(productData);
-    //  save productData to the database
-    try {
-      const response = await axios.post(
-        "http://localhost:8080/api/data/addProduct",
-        productData
-      );
-      console.log("Product Data:", response.data);
-    } catch (e) {
-      console.error(e.message);
-      setError("Error adding product. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
+    AddProducts(productData);
+    console.log(result);
+  }
 
   return (
     <form
@@ -293,9 +290,9 @@ const AddProducts = () => {
             type="submit"
             className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring focus:border-blue-300"
           >
-            {loading ? "Saving..." : "Save"}
+            {result.isLoading ? "Saving..." : "Save"}
           </button>
-          {error && <p className="text-red-500 text-sm ml-2">{error}</p>}
+          {result.isError && <p className="text-red-500 text-sm ml-2">{result.error.data.error}</p>}
         </div>
       </div>
     </form>
