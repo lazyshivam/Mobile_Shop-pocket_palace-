@@ -1,6 +1,6 @@
 const LandingPage = ({ PageInfo }) => {
     const { title, discount, price } = PageInfo;
-  
+   console.log(title, discount, price,"hii from landing page");
     return (
       <div
         className="flex-shrink-0 w-full  p-4 md:p-8 flex flex-col md:flex-row md:items-center justify-between"

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { GrNext, GrPrevious } from "react-icons/gr";
+import { FaCircle } from "react-icons/fa";
 import image1 from "../assets/Main-banner-1-1903x580.jpg";
 import image2 from "../assets/Main-banner-2-1903x580.jpg";
 import LandingPage from "./utitlityComponents/LandingPage";
@@ -8,8 +9,12 @@ import ServicesGrid from "./ServicesGrid";
 import BlogCard from "./utitlityComponents/BlogCard";
 import Company from "./Company";
 import CompanyLogoSlider from "./CompanyLogoSlider";
+import { useGetAllProductsQuery } from "../services/api";
+import Slider from "react-slick";
 
 const Home = () => {
+  const { data: mobilesData, error, isLoading } = useGetAllProductsQuery();
+
   const mobiles = [
     {
       title: "Galaxy S13+ Ultra.",
@@ -28,63 +33,85 @@ const Home = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
-  const nextPage = () => {
-    setCurrentPage((prevPage) => (prevPage + 1) % mobiles.length);
+  const CustomPrevArrow = (props) => (
+    <div
+      onClick={props.onClick}
+      className="absolute  top-36 left-5 bg-gray-300 p-3 rounded-full cursor-pointer z-10"
+    >
+      {/* Your custom prev arrow content */}
+      <GrPrevious />
+    </div>
+  );
+
+  const CustomNextArrow = (props) => (
+    <div
+      onClick={props.onClick}
+      className="absolute top-36 right-5 bg-gray-300 p-3 rounded-full cursor-pointer z-10"
+    >
+      {/* Your custom next arrow content */}
+      <GrNext />
+    </div>
+  );
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1, // Set slidesToShow to the number of logos
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000, // Set the autoplay speed in milliseconds
+    arrows: true,
+    beforeChange: (next) => setCurrentPage(next),
+    appendDots: (dots) => (
+      <ul className="p-0 flex justify-center">
+        {dots.map((dot, index) => (
+          <li
+            key={index}
+            className={`dot ${
+              index === currentPage ? "active text-blue-500" : "text-gray-200"
+            }`}
+          >
+            {dot}
+          </li>
+        ))}
+      </ul>
+    ),
+    customPaging: () => <FaCircle />,
+
+    prevArrow: <CustomPrevArrow />,
+    nextArrow: <CustomNextArrow />,
   };
 
-  const prevPage = () => {
-    setCurrentPage(
-      (prevPage) => (prevPage - 1 + mobiles.length) % mobiles.length
-    );
-  };
+  if (isLoading) {
+    return <div className="text-center text-2xl h-screen">Loading...</div>;
+  }
 
-  useEffect(() => {
-    const interval = setInterval(nextPage, 5000); // Change page every 5 seconds
-    return () => clearInterval(interval);
-  }, []);
-
+  console.log(mobilesData);
   return (
     <>
-      <div
-        className="relative flex flex-col md:flex-row md:h-[500px] overflow-hidden"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+      <Slider
+        {...settings}
+        className="relative flex flex-col md:flex-row md:h-[333px]"
+        // onMouseEnter={() => setIsHovered(true)}
+        // onMouseLeave={() => setIsHovered(false)}
       >
-        <LandingPage PageInfo={mobiles[currentPage]} />
-        {isHovered && (
-          <>
-            <button
-              onClick={prevPage}
-              className="absolute left-0 top-1/2 transform -translate-y-1/2 p-2 md:p-4 bg-gray-300 hover:bg-gray-400 text-white rounded-full"
-            >
-              <GrPrevious />
-            </button>
-            <button
-              onClick={nextPage}
-              className="absolute right-0 top-1/2 transform -translate-y-1/2 p-2 md:p-4 bg-gray-300 hover:bg-gray-400 text-white rounded-full"
-            >
-              <GrNext />
-            </button>
-          </>
-        )}
-        <div className="absolute bottom-2 left-0 right-0 flex justify-center space-x-2">
-          {mobiles.map((_, index) => (
-            <div
-              key={index}
-              className={`h-2 w-2 md:h-3 md:w-3  rounded-full ${
-                index === currentPage ? "bg-blue-400" : "bg-gray-400"
-              }`}
-            />
-          ))}
-        </div>
-      </div>
+        {mobiles?.map((items, index) => (
+          <div key={index} className="">
+            <LandingPage PageInfo={items} />
+          </div>
+        ))}
+      </Slider>
 
       <div className="container mx-auto p-6 md:p-12 ">
         <div className=" bg-gray-200  p-8 rounded-md">
           <div className="flex justify-between items-start">
             <h1 className="text-2xl font-bold">Our Products</h1>
             {/* Link to navigate to the all products page */}
-            <a to="/all-products" className="text-blue-500 hover:cursor-pointer hover:underline">
+            <a
+              to="/all-products"
+              className="text-blue-500 hover:cursor-pointer hover:underline"
+            >
               View All Products
             </a>
           </div>
@@ -98,7 +125,10 @@ const Home = () => {
           <div className="flex justify-between items-start">
             <h1 className="text-2xl font-bold">Our Best Selling Products</h1>
             {/* Link to navigate to the all products page */}
-            <a to="/all-products" className="text-blue-500 hover:cursor-pointer hover:underline">
+            <a
+              to="/all-products"
+              className="text-blue-500 hover:cursor-pointer hover:underline"
+            >
               View All Products
             </a>
           </div>
@@ -112,7 +142,10 @@ const Home = () => {
           <div className="flex justify-between items-start">
             <h1 className="text-2xl font-bold">Our New Products</h1>
             {/* Link to navigate to the all products page */}
-            <a to="/all-products" className="text-blue-500 hover:cursor-pointer hover:underline">
+            <a
+              to="/all-products"
+              className="text-blue-500 hover:cursor-pointer hover:underline"
+            >
               View All Products
             </a>
           </div>
@@ -121,38 +154,37 @@ const Home = () => {
         </div>
       </div>
       <div className="p-2 my-12  bg-gray-200">
-        <ServicesGrid/>
+        <ServicesGrid />
       </div>
       <div className="container mx-auto p-6 md:p-12 ">
         <div className=" p-8 rounded-md">
           <div className="flex justify-between items-start">
             <h1 className="text-2xl font-bold">From the Blogs</h1>
             {/* Link to navigate to the all products page */}
-            <a href="/all-products" className="text-blue-500 hover:cursor-pointer hover:underline">
+            <a
+              href="/all-products"
+              className="text-blue-500 hover:cursor-pointer hover:underline"
+            >
               View Our Blogs
             </a>
           </div>
           <hr className="bg-gray-400 p-[0.5px] mb-12 mt-2" />
           {
             <div className="grid sm:grid-cols-1  md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {
-                    [0,1,2,3].map((items,index)=>(
-                        <div key={index} className="" >
-                            <BlogCard/>
-                        </div>
-                    ))
-                }
+              {[0, 1, 2, 3].map((items, index) => (
+                <div key={index} className="">
+                  <BlogCard />
+                </div>
+              ))}
             </div>
-
           }
         </div>
       </div>
 
       <div className="my-6  bg-white">
-      <hr className="bg-gray-200 p-[0.5px] " />
-       <CompanyLogoSlider/>
+        <hr className="bg-gray-200 p-[0.5px] " />
+        <CompanyLogoSlider />
       </div>
-      
     </>
   );
 };

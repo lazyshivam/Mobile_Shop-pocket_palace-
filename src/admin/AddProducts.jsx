@@ -8,7 +8,7 @@ const AddProducts = () => {
     brand: "",
     model: "",
     specifications: "",
-    price: 0,
+    price:'',
     releaseDate: new Date(),
     images: [],
     type: "",
