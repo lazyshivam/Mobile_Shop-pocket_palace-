@@ -1,29 +1,43 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProductCard from "./utitlityComponents/ProductCard";
-import productsData from "../DummyData";
-// import SearchFormComponent from "./utitlityComponents/SearchFormComponent";
 import Filter from "./utitlityComponents/Filter";
 import { IoFilterOutline } from "react-icons/io5";
 import { RxCross1 } from "react-icons/rx";
 import { GrNext, GrPrevious } from "react-icons/gr";
+import { useGetAllProductsQuery } from "../services/api";
 
 const Products = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 6;
+  const { data: ProductsData, error, isLoading } = useGetAllProductsQuery();
 
-  const [filteredProducts, setFilteredProducts] = useState(productsData);
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
+  useEffect(()=>{
+     if(!isLoading){
+      setFilteredProducts(ProductsData);
+     }
+  },[isLoading,ProductsData])
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = filteredProducts.slice(
+  const currentProducts = filteredProducts?.slice(
     indexOfFirstProduct,
     indexOfLastProduct
   );
 
-  const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
   };
+
+  const handlePrevPage = () => {
+    setCurrentPage((prevPage) => prevPage - 1);
+  };
+
   const [showFilter, setShowFilter] = useState(false);
+
+  if (isLoading) {
+    return <div className="text-center h-screen">Loading...</div>;
+  }
 
   return (
     <div className="min-h-screen relative ">
@@ -40,51 +54,51 @@ const Products = () => {
             onClick={() => setShowFilter(!showFilter)}
             className="p-3  text-2xl hover:cursor-pointer rounded-full bg-gray-200"
           >
-            {showFilter ?<RxCross1/> : <IoFilterOutline/>}
+            {showFilter ? <RxCross1 /> : <IoFilterOutline />}
           </button>
         </div>
 
         {showFilter && (
-          <div className="rounded-xl border w-96 border-gray-200 bg-white shadow-lg absolute left-0 top-20">
+          <div className="w-96 absolute left-0 top-20">
             <Filter />
           </div>
         )}
-
-        
-        
       </div>
       {/* Product Display */}
       <div className="flex md:space-x-4 mt-20 justify-center flex-col md:flex-row flex-1">
         {/* Search Form for Medium and Large Devices */}
-        <div
-          className={`hidden md:block  `}
-        >
+        <div className={`hidden md:block  `}>
           {/* ... (rest of the existing code for the filter form) ... */}
-          <Filter />
+          <Filter setFilteredProducts={setFilteredProducts} Products={ProductsData} />
         </div>
         <div className="w-full md:w-3/4">
           <div className="flex justify-center">
             <div className="grid  sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {currentProducts.map((product) => (
+              {currentProducts?.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
             </div>
           </div>
 
           {/* Pagination */}
-          <div className="mt-4 flex justify-center">
-            {Array.from(
-              { length: Math.ceil(filteredProducts.length / productsPerPage) },
-              (_, index) => (
-                <button
-                  key={index + 1}
-                  onClick={() => paginate(index + 1)}
-                  className="mx-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring focus:border-blue-300"
-                >
-                  {index + 1}
-                </button>
-              )
-            )}
+          <div className="my-4 flex justify-between">
+            {/* Previous Page Button */}
+            <button
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
+              className="mx-2 p-3  bg-gray-300 text-white rounded-full hover:bg-gray-400 focus:outline-none focus:ring focus:border-gray-400"
+            >
+              <GrPrevious />
+            </button>
+
+            {/* Next Page Button */}
+            <button
+              onClick={handleNextPage}
+              disabled={indexOfLastProduct >= filteredProducts?.length}
+              className="mx-2 p-3 bg-gray-300 text-white rounded-full hover:bg-gray-400 focus:outline-none focus:ring focus:border-gray-400"
+            >
+              <GrNext />
+            </button>
           </div>
         </div>
       </div>

@@ -11,6 +11,7 @@ import NewProducts from "./components/NewProducts";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetProfileQuery } from "./services/api";
 import {  selectUserType, setLoggedIn, setUser, setUserType } from "./services/userSlice";
+// import ProductDetailsPopup from "./components/utitlityComponents/ProductDetailsPopup";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -32,7 +33,7 @@ const App = () => {
   return (
     <div>
       <Navbar />
-
+      {/* <ProductDetailsPopup/> */}
       <Routes>
         {userType==='admin'&&<Route exact path="/user_admin" element={<Admin />} />}
         <Route exact path="/" element={<Home />} />

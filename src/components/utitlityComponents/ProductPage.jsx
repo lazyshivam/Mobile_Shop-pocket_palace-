@@ -1,57 +1,90 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import ProductCard from "./ProductCard";
 import { GrNext, GrPrevious } from "react-icons/gr";
+import Slider from "react-slick";
 
-import products  from "../../DummyData"
+const ProductPage = ({ productsData }) => {
+  const Top10Products = productsData?.slice(0, 10);
 
-
-const ProductPage = () => {
   
-
-  const [currentSlide, setCurrentSlide] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  console.log(isHovered)
+  const CustomPrevArrow = (props) => (
+    <div
+      onClick={props.onClick}
+      className={`absolute top-[50%] left-0 z-10  hover:bg-gray-400 bg-gray-300 p-3 rounded-full cursor-pointer  ${
+        isHovered ? "visible" : "invisible"
+      }`}
+    >
+      <GrPrevious />
+    </div>
+  );
 
-  const nextSlide = () => {
-    setCurrentSlide((prevSlide) => (prevSlide + 1) % products.length);
-  };
+  const CustomNextArrow = (props) => (
+    <div
+      onClick={props.onClick}
+      className={`absolute hover:bg-gray-400 z-10 top-[50%] right-0 bg-gray-300 p-3 rounded-full cursor-pointer  ${
+        isHovered ? "visible" : "invisible"
+      }`}
+    >
+      <GrNext />
+    </div>
+  );
 
-  const prevSlide = () => {
-    setCurrentSlide(
-      (prevSlide) => (prevSlide - 1 + products.length) % products.length
-    );
-  };
+  const settings = useMemo(
+    () => ({
+      dots: false,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 5,
+      slidesToScroll: 1,
+      autoplay: false,
+      autoplaySpeed: 2000,
+      // arrows: true,
+      prevArrow: <CustomPrevArrow />,
+      nextArrow: <CustomNextArrow />,
+      responsive: [
+        {
+          breakpoint: 1300,
+          settings: {
+            slidesToShow: 4,
+          },
+        },
+        {
+          breakpoint: 768,
+          settings: {
+            slidesToShow: 2,
+          },
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+          },
+        },
+      ],
+    }),
+    [isHovered]
+  );
 
   return (
-    <div className="relative  overflow-hidden"
-    onMouseEnter={()=>setIsHovered(true)}
-    onMouseLeave={()=>setIsHovered(false)}
-    
+    <div className="" onMouseEnter={() => {setIsHovered(true)}}
+    onMouseLeave={() => setIsHovered(false)}>
+      <Slider
+      {...settings}
+      className="relative  hover:cursor-pointer  overflow-hidden"
+      
     >
-      <div className="flex transition-transform ease-in-out duration-300 transform -translate-x-100">
-        {products.map((product, index) => (
-          <div
-            key={product.id}
-            className="flex-shrink-0"
-            style={{
-              transform: `translateX(${10 * (index - currentSlide)}%)`,
-            }}
-          >
-            <ProductCard product={product} />
-          </div>
-        ))}
-      </div>
-      {isHovered &&(<><button
-        onClick={prevSlide}
-        className="absolute left-0 top-1/2 transform -translate-y-1/2 p-4 bg-gray-300 text-white rounded-full"
-      >
-        <GrPrevious/>
-      </button>
-      <button
-        onClick={nextSlide}
-        className="absolute right-0 top-1/2 transform -translate-y-1/2 p-4  bg-gray-300 text-white rounded-full"
-      >
-       <GrNext/>
-      </button></>)}
+      {Top10Products.map((product, index) => (
+        <div
+          key={index}
+          className="p-2 "
+          // onMouseEnter={()=>console.log("Hovered")}
+        >
+          <ProductCard product={product} />
+        </div>
+      ))}
+    </Slider>
     </div>
   );
 };

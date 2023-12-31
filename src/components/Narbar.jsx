@@ -97,7 +97,7 @@ const Navbar = () => {
       </div>
       {/* menu items for small devices */}
       {isOpen && (
-        <div className="z-10 fixed md:hidden w-44  top-0  left-0 bottom-0 rounded-sm  bg-slate-100 shadow-lg flex items-center justify-start flex-col text-black ">
+        <div className="z-20 fixed md:hidden w-44  top-0  left-0 bottom-0 rounded-sm  bg-slate-100 shadow-lg flex items-center justify-start flex-col text-black ">
           {/* Menu button for small screens */}
           <button
             onClick={() => {
