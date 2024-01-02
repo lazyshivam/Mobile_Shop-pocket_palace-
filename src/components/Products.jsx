@@ -5,6 +5,7 @@ import { IoFilterOutline } from "react-icons/io5";
 import { RxCross1 } from "react-icons/rx";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import { useGetAllProductsQuery } from "../services/api";
+import {DNA} from "react-loader-spinner"
 
 const Products = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -36,9 +37,24 @@ const Products = () => {
   const [showFilter, setShowFilter] = useState(false);
 
   if (isLoading) {
-    return <div className="text-center h-screen">Loading...</div>;
+    return <div className="flex justify-center  my-[30%]"><DNA
+    visible={true}
+    height="80"
+    width="80"
+    ariaLabel="dna-loading"
+    wrapperStyle={{}}
+    wrapperClass="dna-wrapper"
+    /></div>;
   }
 
+  // <DNA
+  // visible={true}
+  // height="80"
+  // width="80"
+  // ariaLabel="dna-loading"
+  // wrapperStyle={{}}
+  // wrapperClass="dna-wrapper"
+  // />
   return (
     <div className="min-h-screen relative ">
       {/* Top Section with Background Image and Text */}
