@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const ensureAuthenticated = require("../middleware/ensureAuthenticated");
+const {ensureAuthenticated} = require("../middleware/ensureAuthenticated");
 const UserCart = require("../models/UserCart");
 const Product = require('../models/Product');
 
 
 // Get all API links for the authenticated user
-router.get("/userProducts",ensureAuthenticated, async (req, res) => {
+router.get("/userProduct",ensureAuthenticated, async (req, res) => {
   try {
     const data = await UserCart.find({ user: req.user.id });
     res.status(200).json(data);
@@ -17,7 +17,7 @@ router.get("/userProducts",ensureAuthenticated, async (req, res) => {
 });
 
 // Add a new API link for the authenticated user
-router.post("/userProducts", ensureAuthenticated, async (req, res) => {
+router.post("/userProduct", ensureAuthenticated, async (req, res) => {
   try {
     const { title, url, method } = req.body;
     const userId = req.user.id;
@@ -68,7 +68,7 @@ router.get("/allProducts", async (req, res) => {
     res.json(allProducts);
   } catch (error) {
     console.error("Error getting all products:", error);
-    res.status(500).json({ error: "Error getting all products" });
+    res.status(500).json({ error: "Error in getting all products" });
   }
 });
 
@@ -87,14 +87,19 @@ router.get("/bestSellingProducts", async (req, res) => {
 // Endpoint to get new products
 router.get("/newProducts", async (req, res) => {
   try {
-  
-    const newProducts = await Product.find({ createdAt: { $gte: new Date(new Date() - 30 * 24 * 60 * 60 * 1000) } });
+    const thirtyDaysAgo = new Date(new Date() - 30 * 24 * 60 * 60 * 1000);
+    console.log("Thirty days ago:", thirtyDaysAgo);
+
+    const newProducts = await Product.find({ releaseDate: { $gte: thirtyDaysAgo } });
+    // console.log("New products found:", newProducts);
+
     res.json(newProducts);
   } catch (error) {
     console.error("Error getting new products:", error);
     res.status(500).json({ error: "Error getting new products" });
   }
 });
+
 
 
 

@@ -3,7 +3,7 @@ const isAdmin = (req, res, next) => {
     if (req.isAuthenticated() && req.user.role === 'admin') {
       return next();
     }
-    res.status(401).json({ message: 'Unauthorized' });
+    res.status(401).json({ error: 'Unauthorized' });
   };
   
   module.exports = { isAdmin };

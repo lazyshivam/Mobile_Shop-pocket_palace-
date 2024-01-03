@@ -1,7 +1,7 @@
 const express = require("express");
 const passport = require("passport");
 const router = express.Router();
-const ensureAuthenticated=require("../middleware/ensureAuthenticated");
+const {ensureAuthenticated}=require("../middleware/ensureAuthenticated");
 const {isAdmin} = require("../middleware/IsAdmin")
 
 router.get(
