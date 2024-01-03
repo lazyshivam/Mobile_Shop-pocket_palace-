@@ -75,7 +75,7 @@ const ProductPage = ({ productsData }) => {
       className="relative  hover:cursor-pointer  overflow-hidden"
       
     >
-      {Top10Products.map((product, index) => (
+      {Top10Products?.map((product, index) => (
         <div
           key={index}
           className="p-2 "

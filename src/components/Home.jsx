@@ -6,20 +6,40 @@ import ServicesGrid from "./ServicesGrid";
 import BlogCard from "./utitlityComponents/BlogCard";
 import Company from "./Company";
 import CompanyLogoSlider from "./CompanyLogoSlider";
-import { useGetAllProductsQuery } from "../services/api";
+import { useGetAllProductsQuery, useGetBestSellingProductsQuery, useGetNewProductsQuery } from "../services/api";
 import Slider from "react-slick";
 import { DNA } from "react-loader-spinner";
 const Home = () => {
-  const { data: productsData, error, isLoading } = useGetAllProductsQuery();
+  
+  const {
+    data: allProductsData,
+    error: allProductsError,
+    isLoading: allProductsLoading,
+  } = useGetAllProductsQuery();
+
+  const {
+    data: bestSellingProductsData,
+    error: bestSellingProductsError,
+    isLoading: bestSellingProductsLoading,
+  } = useGetBestSellingProductsQuery();
+
+  const {
+    data: newProductsData,
+    error: newProductsError,
+    isLoading: newProductsLoading,
+  } = useGetNewProductsQuery();
+
+  
+  
 
   return (
     <>
       <LandingPage />
-      {error ? (
+      {allProductsError ? (
         <div className="text-center h-96 text-red-400 mt-20">
           Oh no, there was an error
         </div>
-      ) : isLoading ? (
+      ) : allProductsLoading ? (
         <div className="flex justify-center  my-[30%]">
           <DNA
             visible={true}
@@ -30,7 +50,7 @@ const Home = () => {
             wrapperClass="dna-wrapper"
           />
         </div>
-      ) : productsData ? (
+      ) : allProductsData ? (
         <>
           <div className="container mx-auto p-6 md:p-12 ">
             <div className=" bg-gray-200  p-8 rounded-md">
@@ -45,7 +65,7 @@ const Home = () => {
                 </a>
               </div>
               <hr className="bg-gray-400 p-[0.5px] mb-12 mt-2" />
-              <ProductPage productsData={productsData} />
+              <ProductPage productsData={allProductsData} />
             </div>
           </div>
 
@@ -64,7 +84,7 @@ const Home = () => {
                 </a>
               </div>
               <hr className="bg-gray-400 p-[0.5px] mb-12 mt-2" />
-              <ProductPage productsData={productsData} />
+              <ProductPage productsData={bestSellingProductsData} />
             </div>
           </div>
 
@@ -81,7 +101,7 @@ const Home = () => {
                 </a>
               </div>
               <hr className="bg-gray-400 p-[0.5px] mb-12 mt-2" />
-              <ProductPage productsData={productsData} />
+              <ProductPage productsData={newProductsData} />
             </div>
           </div>
           <div className="p-2 my-12  bg-gray-200">
