@@ -15,8 +15,6 @@ const ProductCard = ({product}) => {
 
   return (
     <>
-    
-        
     {/* <div className=""> */}
     <ProductDetailsPopup product={product} isPopupOpen={isPopupOpen} onClose={closePopup} />
     {/* </div> */}
