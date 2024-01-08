@@ -43,6 +43,7 @@ app.use(passport.session());
 app.use("/auth", require("./routes/auth"));
 app.use('/admin/user', require("./routes/manageProducts"));
 app.use("/api/data", require("./routes/products"));
+app.use('/api/user', require("./routes/userFeedback"));
 
 
 app.all('*', (req, res) => {

@@ -16,7 +16,7 @@ router.get("/userProduct",ensureAuthenticated, async (req, res) => {
   }
 });
 
-// Add a new API link for the authenticated user
+// Add products to the user cart 
 router.post("/userProduct", ensureAuthenticated, async (req, res) => {
   try {
     const { title, url, method } = req.body;
