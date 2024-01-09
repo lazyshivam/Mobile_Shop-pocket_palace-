@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { useAddFeedBackMutation } from "../services/api";
+import Popover from "./utitlityComponents/Popover";
 
 const About = () => {
   const [feedback, setFeedback] = useState({
     name: "",
     email: "",
     message: "",
+    feedbackDate: new Date(),
   });
 
   const handleChange = (e) => {
@@ -14,17 +17,25 @@ const About = () => {
       [name]: value,
     }));
   };
+  
 
-  const handleSubmit = (e) => {
+  const [addFeedback,result]=useAddFeedBackMutation();
+  const [isSuccessPopupVisible, setSuccessPopupVisibility] = useState(false);
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // You can handle the submission logic here, such as sending the feedback to your backend or displaying a thank-you message.
-    console.log("Feedback submitted:", feedback);
-    // Reset the form after submission
-    setFeedback({
-      name: "",
-      email: "",
-      message: "",
-    });
+
+    try {
+      await addFeedback(feedback);
+      setSuccessPopupVisibility(true);
+      // Reset the form after successful submission
+      setFeedback({
+        name: "",
+        email: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error("Error submitting feedback:", error);
+    }
   };
 
   return (
@@ -56,15 +67,18 @@ const About = () => {
           priority, and we look forward to serving you with excellence.
         </p>
         <div className="mt-12">
-          <h3 className="text-2xl font-bold mb-4">Share Your Feedback</h3>
+        {isSuccessPopupVisible && (
+          <Popover
+            isOpen={isSuccessPopupVisible}
+            onClose={() => setSuccessPopupVisibility(false)}
+          >
+            <p className="text-green-800">Thank you for your feedback!</p>
+          </Popover>
+        )}
+          <h3 className="text-2xl font-bold mb-6">Share Your Feedback</h3>
           <form onSubmit={handleSubmit} className="max-w-lg mx-auto">
             <div className="mb-4">
-              <label
-                htmlFor="name"
-                className="block text-gray-700 text-sm font-bold mb-2"
-              >
-                Your Name
-              </label>
+             
               <input
                 type="text"
                 id="name"
@@ -77,12 +91,7 @@ const About = () => {
               />
             </div>
             <div className="mb-4">
-              <label
-                htmlFor="email"
-                className="block text-gray-700 text-sm font-bold mb-2"
-              >
-                Your Email
-              </label>
+              
               <input
                 type="email"
                 id="email"
@@ -95,12 +104,7 @@ const About = () => {
               />
             </div>
             <div className="mb-4">
-              <label
-                htmlFor="message"
-                className="block text-gray-700 text-sm font-bold mb-2"
-              >
-                Your Message
-              </label>
+             
               <textarea
                 id="message"
                 name="message"
@@ -112,12 +116,24 @@ const About = () => {
                 required
               ></textarea>
             </div>
-            <button
+           {
+            !result.isLoading ?(
+              <button
               type="submit"
               className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none"
             >
               Submit Feedback
             </button>
+            ):(
+              <button
+              type="submit"
+              disabled
+              className="bg-blue-400 text-white py-2 px-4 rounded-md hover:bg-blue-500 focus:outline-none"
+            >
+              Please wait..
+            </button>
+            )
+           }
           </form>
         </div>
         <h1 className="mt-12 text-teal-600 mx-4">"Thank you for exploring our website. Your visit is greatly appreciated. We are grateful for the opportunity to share our products and services with you. If you have any questions or feedback, feel free to reach out. Your satisfaction is our priority, and we look forward to serving you with excellence."</h1>

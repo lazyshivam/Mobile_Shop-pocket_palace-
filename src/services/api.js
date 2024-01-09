@@ -29,6 +29,15 @@ export const baseApi = createApi({
         }),
         
       }),
+      //add user feedback to the database,it is general endpoint for all the user and admin user
+    addFeedBack: builder.mutation({
+      query: (formData) => ({
+        url:'/api/user/userFeedback',
+        method:'POST',
+        body:formData,
+        headers: { 'Content-Type': 'application/json' }
+      })
+    }),
     // get all the products in the user cart,it is general endpoint for all the user and admin user
     getUserCartProducts:builder.query({
         query:()=>'api/data/userProduct'
@@ -54,6 +63,7 @@ export const { useGetProfileQuery,
      useGetUserCartProductsQuery,
      useGetAllProductsQuery,
      useGetNewProductsQuery,
-     useGetBestSellingProductsQuery
+     useGetBestSellingProductsQuery,
+     useAddFeedBackMutation
 
      } = baseApi;
