@@ -39,7 +39,7 @@ const ProductCard = ({product}) => {
           <p className="text-gray-900 font-bold text-xl">${price}.00</p>
         </div>
         <div className="px-6 flex justify-between flex-nowrap pt-4 pb-3">
-          <button className="inline-block bg-blue-500 rounded-full px-3 py-1 text-sm font-semibold text-white ">
+          <button className="inline-block bg-blue-500 hover:bg-blue-600 rounded-full px-3 py-1 text-sm font-semibold text-white ">
             {" "}
             Add To Cart
           </button>

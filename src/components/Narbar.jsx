@@ -3,20 +3,25 @@ import { Link } from "react-router-dom";
 import { PiMagnifyingGlassLight } from "react-icons/pi";
 import { CiShoppingCart } from "react-icons/ci";
 import { CgProfile } from "react-icons/cg";
-import CartComponent from "./CartComponent";
+// import CartComponent from "./CartComponent";
 import { CiMenuBurger } from "react-icons/ci";
 import { IoCloseOutline } from "react-icons/io5";
 import logo from "../assets/mobile-shop-high-resolution-logo-white-transparent.png";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUserType , selectUser, selectLoggedInState} from "../services/userSlice";
+import ShoppingCart from "./ShoppingCart";
 
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false);
+ 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
+  const closeModal = () => {
+    setOpen(!open);
+  };
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const baseUrl='http://localhost:8080';
@@ -88,7 +93,7 @@ const Navbar = () => {
           <button>
             <CiShoppingCart
               onClick={() => {
-                setIsCartOpen(!isCartOpen);
+                setOpen(!open);
               }}
               className="  w-8  h-8"
             />
@@ -203,19 +208,12 @@ const Navbar = () => {
       )}
 
       {/* Cart section for small screens */}
-      {isCartOpen && (
-        <div className="absolute top-20  md:h-[600px] shadow-md right-12 bottom-0 p-4 rounded-lg z-10 bg-gray-100   text-black flex  justify-center">
-          <CartComponent />
-          <button
-            onClick={() => {
-              setIsCartOpen(!isCartOpen);
-            }}
-            className="text-white bg-gray-500 hover:bg-gray-600 p-2 absolute top-0 right-0 "
-          >
-           <IoCloseOutline className="w-8 h-8"/>
-          </button>
-        </div>
-      )}
+     
+        {/* <div className="absolute top-20  md:h-[600px] shadow-md right-12 bottom-0 p-4 rounded-lg z-10 bg-gray-100   text-black flex  justify-center"> */} 
+          <ShoppingCart open={open} closeModal={closeModal} setOpen={setOpen}/>
+          
+        {/* </div> */}
+      {/* )} */}
     </nav>
   );
 };

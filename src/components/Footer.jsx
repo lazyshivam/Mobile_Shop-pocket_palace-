@@ -6,11 +6,11 @@ const Footer = () => {
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
-            <a href="https://flowbite.com/" className="flex items-center">
+            <a href="https://pocket-palace.netlify.app/" className="flex items-center">
               <img
                 src={Shop_Logo}
                 className="h-20"
-                alt="FlowBite Logo"
+                alt="Shop_Logo"
               />
               <span className="self-center ml-6 text-2xl font-semibold whitespace-nowrap text-gray-200">
                 Mobile Shop <br /> <span className="text-sm font-thin text-gray-300">Pocket-Palace</span>
@@ -29,7 +29,7 @@ const Footer = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="https://tailwindcss.com/" className="hover:underline">
+                  <a href="#" className="hover:underline">
                     Tailwind CSS
                   </a>
                 </li>
@@ -42,7 +42,7 @@ const Footer = () => {
               <ul className="text-gray-500  font-medium">
                 <li className="mb-4">
                   <a
-                    href="https://github.com/themesberg/flowbite"
+                    href="https://github.com/lazyshivam"
                     className="hover:underline "
                   >
                     Github
@@ -50,7 +50,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <a
-                    href="https://discord.gg/4eeurUVvTy"
+                    href="#"
                     className="hover:underline"
                   >
                     Discord

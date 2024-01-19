@@ -8,7 +8,7 @@ const ProductPage = ({ productsData }) => {
 
   
   const [isHovered, setIsHovered] = useState(false);
-  console.log(isHovered)
+  // console.log(isHovered)
   const CustomPrevArrow = (props) => (
     <div
       onClick={props.onClick}

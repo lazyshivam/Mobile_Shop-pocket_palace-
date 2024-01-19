@@ -18,7 +18,7 @@ const ProductDetailsPopup = ({ product, onClose, isPopupOpen }) => {
   };
 
   const [isHovered, setIsHovered] = useState(false);
-  console.log(isHovered);
+  // console.log(isHovered);
   const CustomPrevArrow = (props) => (
     <div
       onClick={props.onClick}
@@ -41,7 +41,7 @@ const ProductDetailsPopup = ({ product, onClose, isPopupOpen }) => {
     </div>
   );
 
-  const settings = useMemo(
+  const settings1 = useMemo(
     () => ({
       dots: false,
       infinite: true,
@@ -83,17 +83,17 @@ const ProductDetailsPopup = ({ product, onClose, isPopupOpen }) => {
           <img
             src={`data:${product.images[0].contentType};base64,${product.images[0].data}`}
             alt={product.model}
-            className="w-full h-auto mb-4"
+            className="w-full hover:cursor-pointer transition hover:scale-150 z-50 hover:ease-in-out  h-auto mb-4"
           />
 
           <div className="">
-            <Slider {...settings} className="relative  max-h-60">
+            <Slider {...settings1} className="relative ">
               {product.images.map((image, index) => (
                 <img
                   key={index}
                   src={`data:${image.contentType};base64,${image.data}`}
                   alt={`Thumbnail ${index}`}
-                  className="w-full h-16 mb-2"
+                  className="w-full  hover:h-full  mb-2 hover:cursor-pointer transition hover:scale-150 z-50 hover:ease-in-out"
                 />
               ))}
             </Slider>
@@ -127,21 +127,21 @@ const ProductDetailsPopup = ({ product, onClose, isPopupOpen }) => {
           <div className="flex items-center space-x-2 mb-4">
             <button
               onClick={handleDecrement}
-              className="px-2 py-1 bg-gray-300 rounded"
+              className="px-2 w-7 py-1 bg-gray-300 hover:bg-gray-400  rounded"
             >
               -
             </button>
             <span>{quantity}</span>
             <button
               onClick={handleIncrement}
-              className="px-2 py-1 bg-gray-300 rounded"
+              className="px-2 w-7 py-1 bg-gray-300 hover:bg-gray-400 rounded"
             >
               +
             </button>
           </div>
 
           {/* Add to Cart Button */}
-          <button className="bg-blue-500 text-white py-2 px-4 rounded mb-4">
+          <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mb-4">
             Add to Cart
           </button>
 
