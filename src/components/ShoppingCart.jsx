@@ -27,7 +27,10 @@ const products = [
 ];
 
 const ShoppingCart = ({open,closeModal}) => {
- 
+  const [count,setCount]=useState()
+  const handleCount=()=>{
+
+  }
 
   return (
     <div className={`fixed inset-0 z-10 bg-gray-500 bg-opacity-75 transition-opacity ${open ? 'block' : 'hidden'}`}>
@@ -77,11 +80,14 @@ const ShoppingCart = ({open,closeModal}) => {
                           </div>
                           <div className="flex flex-1 items-end justify-between text-sm">
                             <p className="text-gray-500">Qty {product.quantity}</p>
-
+                             <div className="space-x-2">
+                              <button onClick={handleCount} className='px-2 py-1 text-gray-300 hover:text-gray-400 bg-white drop-shadow'>+</button>
+                              <button onClick={handleCount} className='px-2 py-1 text-gray-300 hover:text-gray-400 bg-white drop-shadow'>-</button>
+                             </div>
                             <div className="flex">
                               <button
                                 type="button"
-                                className="font-medium text-indigo-600 hover:text-indigo-500"
+                                className="font-medium text-red-500 hover:text-red-600"
                               >
                                 Remove
                               </button>
